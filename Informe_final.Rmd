@@ -1,0 +1,1273 @@
+---
+title: 'Informe: Análisis de Diferencias entre Clientes Ocasionales y Clientes con
+  Membresía Anual de Cyclistic'
+autor: "Darío Exequiel Castillo"
+fecha: "09-07-2024"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+## Introducción
+
+
+Este trabajo final se presenta como parte de la Certificación de Análisis de Datos de Google en Coursera. En este proyecto, asumimos el rol de un analista de datos junior dentro del equipo de analistas de marketing de una empresa ficticia de alquiler de bicicletas compartidas, llamada Cyclistic, al cual se le encarga analizar las diferencias en el uso de las bicicletas por parte de los distintos segmentos de clientes, con el fin de diseñar una estrategia de marketing efectiva para convertir a los ciclistas ocasionales en miembros anuales.
+
+Para alcanzar el objetivo propuesto, seguiremos las etapas fundamentales del proceso de análisis de datos: preguntar, preparar, procesar, analizar, compartir y actuar. Nuestro objetivo inmediato es resolver la problemática planteada en este escenario, utilizando datos reales y un lenguaje de programación de nuestra elección, con el fin de demostrar los conocimientos y habilidades adquiridos durante el curso de la certificación.
+
+El objetivo mediato es desarrollar un caso práctico que pueda integrarse a nuestro portafolio y estar disponible para potenciales empleadores.
+
+
+
+## Escenario
+
+
+### A) Contexto General
+
+
+Eres un analista de datos júnior que trabaja en el equipo de analistas de marketing de Cyclistic. La directora de marketing cree que el éxito futuro de la empresa depende de maximizar la cantidad de membresías anuales. Por lo tanto, tu equipo quiere entender qué diferencias existen en el uso de las bicicletas Cyclistic entre los ciclistas ocasionales y los miembros anuales. A través de estos conocimientos, tu equipo diseñará una nueva estrategia de marketing para convertir a los ciclistas ocasionales en miembros anuales. Sin embargo, antes de eso, los ejecutivos de Cyclistic deben aprobar tus recomendaciones; por eso, debes respaldar tu propuesta con una visión convincente de los datos y visualizaciones profesionales de los mismos.
+
+
+
+### B) Personajes y Equipos
+
+
+  * **Cyclistic:** Un programa de bicicletas compartidas que incluye más de 5,800 bicicletas y 600 estaciones en Chicago. Cyclistic ofrece también bicicletas reclinadas, triciclos manuales y bicicletas de carga (no tenemos datos acerca de estos tipos).
+  
+  * **Lily Moreno:** Directora de marketing y tu gerente, responsable del desarrollo de campañas e iniciativas para promover el programa de bicicletas compartidas.
+   
+  * **Equipo de Análisis Computacional de Datos de Marketing de Cyclistic:** Un equipo de analistas de datos encargados de recopilar, analizar e informar datos para conducir la estrategia de marketing de Cyclistic.
+   
+  * **Equipo Ejecutivo de Cyclistic:** El equipo ejecutivo, encargado de aprobar el programa de marketing recomendado.
+
+
+
+### C) Acerca de la Empresa
+
+
+En 2016, Cyclistic lanzó una exitosa oferta de bicicletas compartidas. Desde entonces, el programa creció hasta alcanzar una flota de más de 5,800 bicicletas georreferenciadas y bloqueadas en una red de más de 690 estaciones en toda Chicago, Estados Unidos. Las bicicletas se pueden desbloquear desde una estación y devolverse en cualquier otra estación del sistema en cualquier momento.
+
+
+
+### D) Estrategia de Marketing Actual
+
+
+Hasta ahora, la estrategia de marketing de Cyclistic se basaba en la construcción de un reconocimiento de marca general y en atraer a amplios segmentos de consumidores.
+
+Uno de los enfoques que ayudó a hacer esto posible fue la ***flexibilidad de sus planes de precios***, a saber: pases de ***un solo viaje*** (por $3 por cada viaje de 30 minutos), pases de ***un día completo*** (por $15 por día para viajes ilimitados de tres horas en un período de 24 horas) y ***membresías anuales*** (por $99 por año para viajes ilimitados de 45 minutos). Se incurre en pequeños cargos adicionales (0.15 centavos por minuto) cuando los viajes individuales superan el tiempo máximo permitido para disuadir a los consumidores de no devolver las bicicletas a tiempo.
+
+A los clientes que compran pases de un solo viaje o pases de un día completo se los llama ***ciclistas ocasionales***. Los clientes que compran membresías anuales se llaman ***miembros*** de Cyclistic.
+
+
+
+### E) Objetivo de Marketing
+
+
+Aunque la flexibilidad de precios ayuda a Cyclistic a atraer más clientes, Moreno cree que maximizar el número de miembros anuales será clave para el crecimiento futuro. Además, los analistas financieros de Cyclistic llegaron a la conclusión de que los miembros anuales son mucho más rentables que los ciclistas ocasionales. Por lo tanto, en lugar de crear una campaña de marketing que apunte a potenciales clientes nuevos, Moreno cree que hay muchas posibilidades de convertir a los ciclistas ocasionales en miembros. Ella señala que los ciclistas ocasionales ya conocen el programa de Cyclistic y han elegido a Cyclistic para sus necesidades de movilidad.
+
+
+
+### F) Meta
+
+
+Moreno estableció una meta clara: ***diseñar estrategias de marketing orientadas a convertir a los ciclistas ocasionales en miembros anuales***.
+
+Para hacer eso, el equipo de analistas de marketing necesita entender tres aspectos clave de su base de clientes: 1) ¿cómo difieren los miembros anuales y los ciclistas ocasionales?; 2) ¿por qué los ciclistas ocasionales comprarían una membresía? y; 3) ¿cómo los medios digitales podrían afectar sus tácticas de marketing?.
+
+Moreno y su equipo están interesados en analizar los datos históricos de viajes en bicicleta de Cyclistic para identificar tendencias.
+
+**Moreno te asignó la primera pregunta por responder.**
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+## Fase 1: Preguntar / Definición del Problema
+
+
+### A) Problema
+
+
+La cuestión a resolver puede resumirse en la siguiente pregunta: ***¿Cómo convertir a los ciclistas ocasionales en clientes con membresía anual?*** Recordemos que los clientes ocasionales se definen como aquellos que compran pases de un solo día o pases de un solo viaje y los miembros son aquellos clientes que abonan una membresía para todo un año.
+
+Para lograr nuestro acometido, debemos, entonces, compararlos.
+
+
+
+### B) Aspectos a Considerar
+
+
+  1.	**Incidencia:** Qué porcentaje del total de los viajes realizados durante el período analizado representa cada segmento de cliente.
+  
+  2.	**Frecuencia de Uso:** Analizar la frecuencia de los viajes realizados por parte de los clientes ocasionales y hacer lo propio con los clientes miembros (horas pico en el día; cantidad de viajes por día de la semana, por mes en el año y totales). Comparar estos datos para encontrar diferencias y similitudes entre los segmentos.
+  
+  3.	**Preferencias de Uso:** Analizar que tipo de rodado prefieren los clientes: bicicleta tradicional, bicicleta anclada o bicicleta eléctrica. Revelando diferencias y similitudes entre los segmentos de clientes propuestos.
+  
+  4.	**Flexibilidad de la Oferta:** Evaluar si la oferta de Cyclistic es realmente flexible. Considerar la posibilidad de ofrecer una membresía mensual, trimestral o semestral, de acuerdo con las necesidades laborales y personales de los clientes, así como las características y temporadas de la ciudad (Chicago, EE. UU).
+  
+  5.	**Costos:** Analizar los aranceles que abonan los segmentos de clientes y usar métricas para demostrar la conveniencia de contratar una membresía anual, en lugar de abonar cada viaje o cada día.
+  
+  6.	**Beneficios y Desventajas:** Comparar los beneficios y desventajas de ser un cliente ocasional versus ser un miembro anual, para orientar el proceso de análisis, la posterior exposición y las recomendaciones.
+  
+  
+  
+### C) Interesados
+
+Los interesados en este proyecto son la directora de Marketing (Lily Moreno) y el equipo ejecutivo. La presentación debe ser detallada pero concisa y muy convincente, basada en datos técnicos y financieros.
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+## Fase 2: Preparar / Recolección de los Datos
+
+
+### A) Descripción y Fuentes de los Datos
+
+
+Para lograr el objetivo de este proyecto, el equipo de analistas de marketing necesita entender mejor cómo difieren los miembros anuales y los ciclistas ocasionales, por lo que Moreno y su equipo están interesados en analizar los datos históricos de viajes en bicicleta de Cyclistic para identificar tendencias [aquí](https://divvy-tripdata.s3.amazonaws.com/index.html). (Nota: los conjuntos de datos tienen un nombre diferente porque Cyclistic es una empresa ficticia). 
+
+Estos son datos públicos que podemos usar para los fines de este trabajo; sin embargo, por cuestiones de privacidad de los datos, está prohibido usar información de identificación personal de los ciclistas, como el género y la edad (Nota: los conjuntos de datos han sido provistos por Motivate International Inc. bajo la siguiente [licencia](https://divvybikes.com/data-license-agreement)).
+
+Cada conjunto de datos es un archivo .csv (valores separados por comas), codificado en UTF-8, que contiene detalles de cada viaje registrado por los clientes de Cyclistic. Para este proyecto solo se utilizarán datos respectivos al año 2023, de enero a diciembre.
+
+Después de descargar los archivos zip de origen, el primer paso es crear una carpeta con los nombres de archivo adecuados, en la cual vamos a depositar los archivos extraídos (es una buena práctica, para los proyectos que realizamos en Rstudio, crear al menos cuatro carpetas: código, data, tablas y visualizaciones – subdividiendo, además, la carpeta “data” en comprimidas y extraídas). 
+
+
+
+### B) Calidad de los datos
+
+
+Antes de usar un conjunto de datos, hay algunas buenas prácticas que podemos seguir para comprobar la medida de confiabilidad de los datos por colectar, o bien de la fuente. Para esto vamos a poner en práctica el proceso ROCCC (acrónimo en inglés de: Reliable, Original, Comprehensive, Current, Cited).
+
+  **Datos Confiables:**  cuando consultamos fuentes confiables obtenemos información precisa, completa y libre de sesgos, comprobados y aptos para su uso.
+  
+  **Datos Originales:** son datos que provienen de una fuente primaria, la cual puede ser localizada.
+  
+  **Datos Completos:** los conjuntos contienen toda la información crítica necesaria para responder la pregunta o encontrar la solución.
+  
+  **Datos Actuales:** los datos son actuales y pertinentes para la tarea en cuestión. Además, la organización actualiza los datos de manera regular.
+  
+  **Datos Citados:** citar la fuente hace que los datos que proveemos o de los cuales nos valemos para una tarea, sean más verosímiles. En este caso, la fuente ha sido citada y verificada. 
+
+De esta manera podemos comprobar que los conjuntos de datos que vamos a utilizar para esta tarea son: confiables, originales, completos, actuales y han sido citados.
+
+
+
+### C) Recolección e Integración
+
+
+Hasta este punto, hemos descargado los datos necesarios, los cuales han sido almacenados adecuadamente; también hemos determinado la credibilidad de la fuente y de los datos, y la misma ha sido citada. Asimismo hemos explorado las limitaciones de los datos, establecidas en la licencia de la organización proveedora administradora del programa. 
+
+Por lo tanto, estamos en condiciones de avanzar hacia la preparación de los datos, previo a la transformación y análisis.
+
+Los pasos a seguir son los siguientes:
+
+  1. Preparar el entorno mediante la descarga de los paquetes necesarios para las tareas a efectuar.
+  
+  2. Cargar los archivos correspondientes al período solicitado y unificarlos en un solo marco de datos.
+  
+  3. Realizar una exploración inicial, inspeccionando las primeras filas y las estructuras de los datos.
+  
+  4. Identificar y manejar datos faltantes o anómalos (limpieza de los datos).
+  
+  5. Formatear las variables adecuadamente para el análisis (transformación de los datos).
+  
+***(Nota: los pasos 4 y 5 pertenecen a la fase siguiente y allí serán abordados en la fase siguiente.)***
+
+
+
+### C.1) Elección de R y Rstudio
+
+
+Para todas las actividades siguientes, vamos a utilizar el lenguaje de programación R y el entorno de desarrollo integrado (IDE) RStudio.
+
+Existen algunas razones que motivan nuestra elección, a saber:
+
+  1. En primer lugar, es el lenguaje de programación que fue enseñado durante el cursado de la Certificación, de la cual este trabajo forma parte.
+  
+  2. En segundo lugar, R es un lenguaje de programación diseñado para el análisis de datos y estadística, capaz de manejar grandes volúmenes de datos eficientemente. Esto resulta adecuado, considerando que nuestro marco de datos cuenta con más de 5 milloes de observaciones.
+  
+  3. En tercer lugar, existen numerosos paquetes en R, como 'data.table', 'dplyr', y 'tidyverse', que están optimizados para trabajar con grandes conjuntos de datos y realizar operaciones de manipulación de datos de manera rápida y eficiente.
+  
+  4. En cuarto lugar, RStudio proporciona una interfaz amigable que facilita la escritura, ejecución y depuración de código R.
+  
+  5. En quinto lugar, RStudio incluye herramientas integradas para la visualización de datos, lo que facilita la exploración y el análisis interactivo de grandes conjuntos de datos. Por ejemplo, 'ggplot2', permite crear visualizaciones complejas y personalizadas.
+  
+  6.  En sexto lugar, R tiene una gran comunidad de usuarios y desarrolladores que contribuyen con paquetes, documentación y soporte, lo que facilita encontrar soluciones y mejores prácticas en línea para el manejo de grandes conjuntos de datos.
+  
+  7. En séptimo lugar, R proporciona funciones para importar y exportar datos en varios formatos, lo que facilita el intercambio de datos entre diferentes herramientas y plataformas.
+  
+  8. Por último, y muy importante, RStudio facilita la generación de reportes reproducibles y dinámicos utilizando 'R Markdown', que puede combinar código, visualizaciones y texto en un solo documento.
+  
+  
+
+### C.2) Ejecución de las Tareas
+
+
+Primero, descargamos los paquetes necesarios.
+
+
+```{r  setup, include=TRUE}
+
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(janitor)
+
+```
+
+
+Segundo, cargar los conjuntos de datos correspondientes.
+
+
+```{r cargar los conjuntos de datos}
+
+ene_23 <- read.csv("Cyclistic/data/data_extraida/202301-divvy-tripdata.csv")
+feb_23 <- read.csv("Cyclistic/data/data_extraida/202302-divvy-tripdata.csv")
+mar_23 <- read.csv("Cyclistic/data/data_extraida/202303-divvy-tripdata.csv")
+abr_23 <- read.csv("Cyclistic/data/data_extraida/202304-divvy-tripdata.csv")
+may_23 <- read.csv("Cyclistic/data/data_extraida/202305-divvy-tripdata.csv")
+jun_23 <- read.csv("Cyclistic/data/data_extraida/202306-divvy-tripdata.csv")
+jul_23 <- read.csv("Cyclistic/data/data_extraida/202307-divvy-tripdata.csv")
+ago_23 <- read.csv("Cyclistic/data/data_extraida/202308-divvy-tripdata.csv")
+sep_23 <- read.csv("Cyclistic/data/data_extraida/202309-divvy-tripdata.csv")
+oct_23 <- read.csv("Cyclistic/data/data_extraida/202310-divvy-tripdata.csv")
+nov_23 <- read.csv("Cyclistic/data/data_extraida/202311-divvy-tripdata.csv")
+dic_23 <- read.csv("Cyclistic/data/data_extraida/202312-divvy-tripdata.csv")
+
+```
+
+
+Antes de unir los conjuntos en un solo marco de datos, es preciso inspeccionar las columnas que componen cada conjunto, de manera de poner de manifiesto o descartar incongruencias. No es necesario que los nombres de las columnas sean idénticos, pero sí que contengan el mismo tipo de variable; por lo cual también debemos revisar la estrucutura de cada uno de ellos.
+
+***Nota: en honor de la brevedad, en este informe vamos a dejar asentada la inspección del primer conjunto (correspondiente al mes de enero de 2023) y el último (correspondiente al mes de diciembre de 2023); aunque nosotros ya hemos inspeccionado cada conjunto en singular.***
+
+
+```{r inspecionar las columnas}
+
+colnames(ene_23)
+
+colnames(dic_23)
+
+```
+
+
+```{r inspeccionar la estructura de los conjuntos}
+
+str(ene_23)
+
+str(dic_23)
+
+```
+
+
+***Nota: en los conjuntos de datos correspondientes al período consultado, hubo un salto de calidad en cuanto a los nombres de las columnas, comparados con aquellos correspondientes al primer trimestre de 2020 (y anteriores). Estos últimos contenían nombres de columnas que primero era necesario corregir con la función 'clean_names()' del paquete janitor y luego renombrarlos con la función 'rename()' del paquete dplyr, de manera previa a la relización de cualquier otra actividad. Actualmente, esa limpieza ya no resulta necesaria.***
+
+
+Como vemos, tanto los nombres de las columnas, como el tipo de dato que cada una contiene coinciden plenamente en cada uno de los conjuntos de datos que han sido cargados, por lo que estamos en condiciones apilarlos a lo largo en un solo marco de datos.
+
+Por último, vamos a inspeccionar las primeras y las últimas filas de nuestro marco de datos, para familiarizarnos con él.
+
+
+```{r unificar los conjuntos en un solo marco}
+
+full_dataset <- bind_rows(ene_23, feb_23, mar_23, abr_23, may_23, jun_23, jul_23, ago_23, sep_23, oct_23, nov_23, dic_23)
+
+
+```
+
+
+```{r exploracion inicial del marco unificado}
+
+head(full_dataset)
+
+tail(full_dataset)
+
+```
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+## Fase 3: Procesar / Limpieza y Preparación de los Datos
+
+
+La limpieza y preparación de los datos son fases esenciales para garantizar la precisión, fiabilidad y utilidad del análisis de datos, lo que a su vez permite una mejor toma de decisiones y eficiencia en los procesos analíticos.
+
+A partir de esta declaración, podemos enumerar algunas razones por las cuales estas fases tienen tal trascendencia, sin pretensión de ser exhaustivos. Esta enumeración nos permitirá, además, poner en orden algunas actividades  que es preciso realizar en esta instancia, para que este trabajo llegue a cumplir su objetivo y sus conclusiones sean precisas y de aplicación exitosa.
+
+  1. Explorar de manera minuciosa nuestro marco de datos y eliminar errores para asegurar que los datos sean consistentes, ya que los datos crudos suelen contener errores, duplicados e inconsistencias que pueden distorsionar los resultados del análisis.
+  
+  2. Los datos preparados correctamente proporcionan perspectivas más claras y las decisiones basadas en datos limpios son más fiables y efectivas.
+  
+  3. Los datos limpios y bien estructurados reducen el tiempo y los recursos necesarios para el análisis, ya que se minimizan los problemas y errores que podrían surgir durante el procesamiento.
+  
+  4. La limpieza de datos ayuda a cumplir con regulaciones y estándares de calidad de datos, asegurando que las organizaciones y los analistas mantengan buenas prácticas de gestión de datos.
+
+
+
+
+### A) Exploración y Limpieza
+
+
+El proceso de limpieza de datos implica identificar errores en un conjunto de datos y luego corregirlos o eliminarlos. Los errores de datos pueden incluir datos incorrectos, duplicados, incompletos o inconsistentes.
+
+Vamos a revisar si en nuestro conjunto de datos unificado tenemos valores faltantes o nulos.
+
+
+```{r buscar valores faltantes o nulos}
+
+valores_nulos_por_columna <- sapply(full_dataset, function(x) sum(is.na(x)))
+
+print(valores_nulos_por_columna)
+
+```
+
+
+Parece que tenemos 6990 filas con valores faltantes en las columnas 'end_lat' y 'end_lng', en las cuales también faltan los valores de las columnas 'end_station_name' y 'end_station_id'. Vamos a remover estos valores ya que no pueden ser rellenados siguiendo algún criterio lógico.
+
+Crearemos un nueva versión de nuestro conjunto, ya que vamos a remover datos, en este y en los siguientes pasos. Además, resulta útil conservar la versión original por si cometemos algún error y debemos volver sobre nuestros pasos.
+
+
+```{r eliminar valores faltantes}
+
+full_dataset_v2 <- na.omit(full_dataset)
+
+```
+
+
+En este paso fueron removidas, de la nueva versión de nuestro marco de datos, las 6990 observaciones con valores faltantes mencionadas. Vamos a explorar el resultado para asegurarnos.
+
+
+```{r comprobar la remoción de los valores faltantes}
+
+valores_nulos_por_columna <- sapply(full_dataset_v2, function(x) sum(is.na(x)))
+
+print(valores_nulos_por_columna)
+
+```
+
+  
+También hay muchos valores faltantes en las columnas 'start_station_ name', 'start_station_id', end'_station_name', y 'end_station_id'; todas estas son de tipo carácter o cadena; por lo que para que aparecieran en el resultado del código anterior, deberíamos reemplazar la cadena vacía ("") por el valor desconocido ("NA") y luego removerlos (en realidad no son datos ausentes sino perdidos o desconocidos).
+
+Ahora bien, la eliminación de filas o columnas con valores desconocidos puede resultar en la pérdida de una cantidad significativa de datos, lo que puede afectar la representatividad y la calidad del análisis, por lo que debería ser considerado como una última opción, luego de considerar alternativas de imputación.
+
+Por lo tanto, no vamos a remover estas filas, porque estos datos SI pueden ser rellenados a partir de las columnas de latitud y longitud, las cuales hemos filtrado, analizado y comprobado que coinciden exactamente con los nombres e id's de los valores que sí son conocidos. Por lo tanto vamos a mantenerlas y no removerlas.
+
+
+
+```{r resaltar valores desconocidos pero reconocibles}
+
+sum(full_dataset_v2$start_station_name == "")
+
+sum(full_dataset_v2$start_station_id == "")
+
+sum(full_dataset_v2$end_station_name == "")
+
+sum(full_dataset_v2$end_station_id == "")
+
+```
+
+
+***Nota: en este trabajo no procedemos con el relleno porque no contamos con la información exacta de la latitud y longitud correspondiente a cada estación; y hacerlo manualmente, combinación por combinación, teniendo en cuenta que existen más de 600 estaciones, excede ampliamente el próposito de este proyecto final (más allá de la comprobación que ya hemos mencionado).***
+
+
+Por último, vamos a comprobar que no existan valores duplicados en nuestro conjunto, utilizando la función 'anyDuplicated' del paquete base de R. Si no existen valores duplicados el resultado será cero (0); si existen valores duplicados, el resultado será un mayor que cero (un entero positivo).
+
+
+```{r buscar valores duplicados}
+
+anyDuplicated(full_dataset_v2, fromLast = TRUE)
+
+```
+
+
+### B) Transformación y Limpieza
+
+
+Ahora bien, para continuar con el procesamiento, necesitamos modificar y agregar campos que nos posibiliten un análisis en diferentes niveles para cumplir con los ***aspectos a considerar*** establecidos en la fase anterior.
+
+Para ello, en primer lugar, vamos a convertir las columnas 'started_at' y 'ended_at' al formato de fecha adecuado (POSIXct), lo cual nos abre la posibilidad de realizar algunos cálculos. En particular, queremos determinar el tiempo de recorrido de cada viaje y colocarlo en una nueva columna que se llame 'ride_length'.
+
+
+```{r convertir las columnas de fecha al tipo adecuado y agregar una columna calculada}
+
+full_dataset_v2 <- full_dataset_v2 %>%
+  mutate(started_at = ymd_hms(started_at),
+         ended_at = ymd_hms(ended_at),
+         ride_length = as.numeric(difftime(ended_at, started_at, units = "mins")))
+
+```
+
+
+En segundo lugar, vamos a crear cuatro columnas adicionales. Tres de ellas se derivarán directamente de la columna ‘started_at’, que contiene fechas en formato “aaaa-mm-dd hh-mm-ss” (para el día, mes y año). La cuarta columna representará los días de la semana (de tipo factor ordenado). Esto nos permitirá analizar la cantidad de recorridos y su promedio en diferentes niveles y temporadas
+
+
+
+```{r agregar columnas para día mes y año}
+
+full_dataset_v2 <- full_dataset_v2 %>%
+  mutate(day = day(started_at),
+         month = month(started_at),
+         year = year(started_at),
+         day_of_week = wday(started_at, label = TRUE, abbr = TRUE, week_start = 1))
+
+```
+
+
+También vamos a crear una columna para los meses y vamos a convertirla a tipo factor ordenado. Esto será útil para agrupar los recorridos totales por mes; similar a lo que haremos con los días de la semana.
+
+
+```{r crear una columna para los meses del año}
+
+full_dataset_v2$month_of_year <- month.abb[full_dataset_v2$month]
+
+```
+
+
+
+```{r ordenar los meses y modificar la etiqueta}
+
+full_dataset_v2$month_of_year <- factor(full_dataset_v2$month_of_year,
+                                  levels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+                                  labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
+
+```
+
+
+Por último, vamos a crear una columna con la hora del día en la que comenzaron los recorridos, extraída de la columna 'started_at'. Este paso tendrá relevancia para que podamos conocer las horas en el día con mayor y menor demanda.
+
+
+
+```{r crear una columna con la hora del día}
+
+full_dataset_v2 <- full_dataset_v2 %>% 
+  mutate(hour = hour(started_at))
+
+```
+
+
+Vamos a chequear la estructura de nuestro conjunto de datos modificado y las primeras filas, para ver el resultado de las transformaciones realizadas y comprobar que todo vaya según lo planeado.
+
+
+```{r inspeccionar la estructura y las primeras filas}
+
+str(full_dataset_v2)
+
+head(full_dataset_v2)
+
+```
+
+
+
+***Nota: mientras realizábamos el análisis previo a la confección de este informe final, hubo algunos inconvenientes provocados porque algunos valores en las columnas 'started_at' y 'ended_at', las cuales fueron transformadas al tipo 'POSIXct', no tienen el formato esperado. Debemos identificar esas filas con formato de fecha incosistente y removerlas.***
+***En total son 49 (23 en la columna 'started_at' y 26 en la columna 'ended_at'), lo cual no repercutiría significativamente en nuestro análisis; no tenemos un criterio provisto para corregirlas y; al faltarles la hora, los minutos y los segundos, la columna calculada 'ride_length' obtiene un valor incorrecto.***
+***Procedemos a eliminarlas de nuestro marco de datos.***
+***Los siguientes fragmentos de código obedecen a esta razón***
+
+
+```{r identificar valores de fecha sin el formato correcto}
+
+invalid_dates_started <- full_dataset_v2[!grepl("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$", full_dataset_v2$started_at), ]
+
+invalid_dates_ended <- full_dataset_v2[!grepl("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$", full_dataset_v2$ended_at), ]
+
+```
+
+
+
+```{r mostrar observaciones con formato de fecha inválida}
+
+print(invalid_dates_started)
+
+print(invalid_dates_ended)
+
+```
+
+
+
+```{r remover observaciones con formato de fecha inválida}
+
+full_dataset_v2 <- full_dataset_v2[grepl("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$", full_dataset_v2$started_at), ]
+
+full_dataset_v2 <- full_dataset_v2[grepl("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$", full_dataset_v2$ended_at), ]
+
+```
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+## Fase 4: Analizar / Análisis Exploratorio de Datos (EDA)
+
+
+Ahora que hemos finalizado con la limpieza y transformación apropiada para nuestro marco de datos, podemos continuar con el análisis descriptivo, para entender mejor los datos y las diferencias (y, tal vez, también similitudes) entre los dos tipos de clientes. 
+
+La fase de Exploración de Datos es fundamental para obtener una comprensión profunda y preliminar de los datos, detectar anomalías o errores y resolverlos, identificar patrones y tendencias; esto provee una base sólida para formular hipótesis y guiar las decisiones sobre las técnicas analíticas a utilizar. Sin esta fase, el análisis posterior puede resultar menos preciso y estar basado en suposiciones incorrectas.
+
+Vamos a usar las posibilidades que nos provee esta herramienta para obtener algunas estadísticas descriptivas, realizar cálculos y confeccionar visualizaciones simples, que nos guíen durante esta etapa y garanticen que los datos realmente sean de alta calidad y bien entendidos, lo cual es esencial realizar un análisis más preciso y efectivo, y obtener resultados confiables y accionables en estapas posteriores.
+
+
+
+### A) Exploración 
+
+
+En primer lugar, veamos algunas estadísticas globales del conjunto de datos.
+
+```{r estadsticas globales}
+
+estadisticas_globales <- full_dataset_v2 %>%
+  summarise(
+    cantidad_de_viajes = n(), # Cantidad de observaciones
+    tiempo_promedio = mean(ride_length, na.rm = TRUE), # Media
+    desviacion_estándar = sd(ride_length, na.rm = TRUE), # Desviación estándar
+    tiempo_min = min(ride_length, na.rm = TRUE), # Mínimo
+    Q1 = quantile(ride_length, 0.25, na.rm = TRUE), # Primer cuartil
+    mediana = median(ride_length, na.rm = TRUE), # Mediana
+    Q3 = quantile(ride_length, 0.75, na.rm = TRUE), # Tercer cuartil
+    tiempo_max = max(ride_length, na.rm = TRUE), # Máximo
+    IQR = IQR(ride_length, na.rm = TRUE) # Rango intercuartil 
+  )
+
+```
+
+
+```{r mostrar estadísticas globales}
+
+print(estadisticas_globales)
+
+```
+
+
+Ahora vamos a ver datos estadísticos pero comparando los dos segmentos de clientes.
+
+
+```{r estadísticas por segmento}
+
+estadisticas_por_segmento <- full_dataset_v2 %>% 
+  group_by(member_casual) %>% 
+  summarise(
+    cantidad_de_viajes = n(), # Cantidad de observaciones
+    tiempo_promedio = mean(ride_length, na.rm = TRUE), # Media
+    desviacion_estándar = sd(ride_length, na.rm = TRUE), # Desviación estándar
+    tiempo_min = min(ride_length, na.rm = TRUE), # Mínimo
+    Q1 = quantile(ride_length, 0.25, na.rm = TRUE), # Primer cuartil
+    mediana = median(ride_length, na.rm = TRUE), # Mediana
+    Q3 = quantile(ride_length, 0.75, na.rm = TRUE), # Tercer cuartil
+    tiempo_max = max(ride_length, na.rm = TRUE), # Máximo
+    IQR = IQR(ride_length, na.rm = TRUE) # Rango intercuartil
+  )
+
+```
+
+
+```{r mostrar estadísticas por segmento}
+
+print(estadisticas_por_segmento)
+
+```
+
+
+Parece que tenemos valores atípicos, sobre todo en cuanto al tiempo mínimo y máximo de los recorridos.
+
+Algunos indicadores son:
+
+  1. Tiempo máximo de recorrido:
+  
+    Para los clientes ocasionales, la duración máxima del viaje es de 12,136.30 minutos (aproximadamente 202 horas).
+    
+    Para los clientes con membresía, la duración máxima del viaje es de 1,499.93 minutos (aproximadamente 25 horas).
+    
+  2. Tiempo mínimo de recorrido:
+    
+    En ambos segmentos nos encontramos con que el menor tiempo de recorrido es mayor que 16,000 minutos.
+
+  2. Desviación estándar:
+  
+    La desviación estándar para los clientes ocasionales es 49.94 minutos, y para los clientes con membresía es 25.53 minutos, lo cual sugiere una amplia dispersión en los tiempos de viaje.
+    
+  3. Rango intercuartil (IQR):
+    
+    El IQR para los clientes ocasionales es de 15.40 minutos y para los clientes con membresía es de 9.67 minutos. Si bien el IQR es una medida robusta que no se ve afectada por los valores atípicos, la gran diferencia entre el tercer cuartil (Q3) y el tiempo máximo de viaje indica la presencia de valores extremos.
+    
+    
+Estos valores pueden estar sesgando la distribución de nuestros datos y comprometiendo nuestro análsis posterior. Debemos definir y remover estos valores atípicos.
+
+Vamos a remover los valores negativos, y también algunos valores muy pequeños, improbables (ej. 0.016 min = 1 seg), menores que un minuto. En todas estas observaciones, la fecha de inicio es posterior, igual o casi idéntica que la fecha de finalización. Esto puede deberse a un error de registro, o bien, cuando algunas bicicletas fueron removidas para control de calidad.
+También tenemos algunos valores que son extremadamente grandes; más allá de 5 horas.
+
+
+```{r identificar valores atípicos}
+
+sum(full_dataset_v2$ride_length < 1)
+
+sum(full_dataset_v2$ride_length > 300)
+
+```
+
+Vamos a remover las 156,690 obsevaciones identificadas, que cumplen con los párametros definidos.
+
+
+```{r remover valores atípicos}
+
+full_dataset_v2 <- full_dataset_v2[!(full_dataset_v2$ride_length < 1 | full_dataset_v2$ride_length > 300),]
+
+```
+
+
+Ahora, salvado este escollo, podemos continuar con nuestro análisis descriptivo, partiendo nuevamente de la observación de datos estadísticos globales y agrupados por segmento de cliente.
+
+
+```{r datos estadísticos globales v2}
+
+estadisticas_globales_v2 <- full_dataset_v2 %>%
+  summarise(
+    cantidad_de_viajes = n(), # Cantidad de observaciones
+    tiempo_promedio = mean(ride_length, na.rm = TRUE), # Media
+    desviacion_estándar = sd(ride_length, na.rm = TRUE), # Desviación estándar
+    tiempo_min = min(ride_length, na.rm = TRUE), # Mínimo
+    Q1 = quantile(ride_length, 0.25, na.rm = TRUE), # Primer cuartil
+    mediana = median(ride_length, na.rm = TRUE), # Mediana
+    Q3 = quantile(ride_length, 0.75, na.rm = TRUE), # Tercer cuartil
+    tiempo_max = max(ride_length, na.rm = TRUE), # Máximo
+    IQR = IQR(ride_length, na.rm = TRUE) # Rango intercuartil 
+  )
+
+print(estadisticas_globales_v2)
+
+```
+
+
+```{r datos estadísticos por segmento de cliente v2}
+
+estadisticas_por_segmento_v2 <- full_dataset_v2 %>% 
+  group_by(member_casual) %>% 
+  summarise(
+    cantidad_de_viajes = n(), # Cantidad de observaciones
+    tiempo_promedio = mean(ride_length, na.rm = TRUE), # Media
+    desviacion_estándar = sd(ride_length, na.rm = TRUE), # Desviación estándar
+    tiempo_min = min(ride_length, na.rm = TRUE), # Mínimo
+    Q1 = quantile(ride_length, 0.25, na.rm = TRUE), # Primer cuartil
+    mediana = median(ride_length, na.rm = TRUE), # Mediana
+    Q3 = quantile(ride_length, 0.75, na.rm = TRUE), # Tercer cuartil
+    tiempo_max = max(ride_length, na.rm = TRUE), # Máximo
+    IQR = IQR(ride_length, na.rm = TRUE) # Rango intercuartil
+  )
+
+print(estadisticas_por_segmento_v2)
+
+```
+
+
+Vamos a exportar las tablas con estadísticas para poder analizarlas con mayor profundidad usando las funciones gráficas y de visualización.
+
+
+```{r exportar tablas}
+
+write.csv(estadisticas_globales, file = "Cyclistic/tablas/estadisticas_globales.csv")
+
+write.csv(estadisticas_por_segmento, file = "Cyclistic/tablas/estadisticas_por_segmento.csv")
+
+```
+
+
+### B) Análisis
+
+
+### B.1) Incidencia en el total
+
+
+Actualmente, nuestro marco de datos cuenta con 5,556,148 observaciones registradas, acerca de las que podemos expresar lo siguiente:
+
+  * 3,560,899 corresponden a los **clientes con membresía**, es decir, representan el **64.09%** del total.
+  
+  * 1,995,249 corresponden a los **ciclistas ocasionales**, es decir, representan el **35.91%** del total.
+  
+  * Según las magnitudes anteriores, el conjunto de los clientes con membresía es un **78.46%** mayor que el conjunto de los clientes ocasionales.
+
+Con el siguiente gráfico, podemos mostrar lo antedicho.
+
+
+
+```{r gráfico de la incidencia en el total}
+
+ggplot(full_dataset_v2, aes(y = member_casual)) +
+  geom_bar(position = "stack", fill = c("#FF7F0E", "#1F77B4")) +
+  labs(title = "Total de viajes registrados por tipo de cliente",
+       subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023", caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x = "Cantidad total", y = "Cliente", fill = "Segmento") +
+  theme_classic() +
+  # Mostrar los valores reales en el eje x
+  scale_x_continuous(labels = scales::comma) +
+  # Agregar porcentajes en las barras
+  geom_text(aes(label = scales::percent(..count../sum(..count..))), 
+            stat = "count",
+            position = position_stack(vjust = 0.5),
+            color = "#FFFAFA")
+
+```
+
+
+### B.2) Conducta desplegada reflejada en los tiempo de viaje
+
+
+Dentro de los totales correspondientes a cada segmento de clientes (miembros 64% y ocasionales 36%), podemos notar los siguientes patrones:
+
+  * Para los ***clientes con membresía*** se registraron 3,508,099 observaciones (sobre un total de 3.560.899) cuyo tiempo de recorrido es menor o igual que 45 minutos (***98.52%***), que es el tiempo máximo de recorrido habilitado por viaje, para no incurrir en penalizaciones. Es decir, que solo 52.800 recorridos registrados (1.48%), excedieron el límite mencionado. Lo que demuestra un conocimiento y acatamiento casi unánime de las reglas establecidas.
+  
+  * Para los ***ciclistas ocasionales*** se registraron 1,995,249 observaciones, de las cuales 1,668,530 son menores o iguales que 30 minutos (***83.62%***); 1.821.633 son menores o iguales que 45 minutos (***91.30%***) y; solo 173,616 son mayores que 45 minutos (***8.70%***). Lo que pone de manifiesto un patrón de conducta casi idéntico que el desplegado por los clientes con memebresía.
+  
+  
+```{r dataframe para miembros}
+
+
+df_member$grupo <- ifelse(df_member$ride_length <= 45, "Menor o igual a 45mins", "Mayor a 45mins")
+
+frecuencia_member <- table(df_member$grupo)
+
+
+```
+
+
+```{r patrón de conducta de los clientes con membresía}
+
+ggplot(df_member, aes(x = grupo)) +
+  geom_bar(fill = "#1F77B4", position = "dodge") +
+  labs(title = "Patrón de conducta de los clientes  con membresía", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023",
+       x = "Tiempo de recorrido", y = "Total", caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html") +
+  scale_y_continuous(labels = scales::comma) +
+  geom_text(aes(label = scales::percent(..count../sum(..count..))), 
+            stat = "count",
+            position = position_stack(vjust = 0.5),
+            color = "#FFFAFA") +
+  theme_minimal()
+
+```
+
+
+
+```{r dataframe para ciclistas ocasionales}
+
+df_casual$grupo <- ifelse(df_casual$ride_length <= 45, "Menor o igual a 45mins", "Mayor a 45mins")
+
+frecuencia_casual <- table(df_casual$grupo)
+
+```
+
+
+
+```{r patrón de conducta de los ciclistas ocasionales}
+
+ggplot(df_casual, aes(x = grupo)) +
+  geom_bar(fill = "#FF7F0E", position = "dodge") +
+  labs(title = "Patrón de conducta de los ciclistas ocasionales", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023",
+       x = "Tiempo de recorrido", y = "Total", caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html") +
+  scale_y_continuous(labels = scales::comma) +
+  geom_text(aes(label = scales::percent(..count../sum(..count..))), 
+            stat = "count",
+            position = position_stack(vjust = 0.5),
+            color = "#FFFAFA") +
+  theme_minimal()
+
+```
+
+
+En vista de los patrones de comportamiento expuestos, podemos decir que, en este aspecto, la intuición de Moreno es corrrecta y es factible convencer a una parte significativa de los ciclistas ocasionales en clientes miembros del programa.
+
+Además, realizando algunos cálculos sencillos y analizando los costos de viaje por minuto, en relación a la oferta actual de Cyclistic, podemos demostrar la conveniencia económica (para los usuarios) que conlleva convertirse en un cliente con membresía, comparado a continuar siendo un cliente ocasional. 
+
+La conveniencia mencionada en el párrafo anterior, se acentúa si también traemos a colación la posibilidad que tienen los miembros anuales de realizar viajes ilimitados, con un tiempo máximo de 45 minutos (límite máximo de tiempo registrado para más del 90% del las observaciones).
+
+
+**Resumen de los costos por minuto:**
+
+  *   Pase de un solo viaje: $0.10 por minuto.
+  
+  *   Pase de un día completo: $0.0833 por minuto (suponiendo que un cliente use exactamente 3 horas - 180 minutos- en un día).
+  
+  *   Membresía anual: $0.006 por minuto (suponiendo un solo viaje diario) / $0.003 por minuto (suponiendo dos viajes diarios).
+  
+  *   Penalizaciones: $0.15 por minuto.
+  
+  
+### B.3) Total de viajes mensuales
+
+
+Exploremos ahora la cantidad de viajes que ha realizado cada segmento de cliente a lo largo del período consultado, agrupados por mes. Esto nos será útil para reconocer si la demanda es constante o si es estacional. Además, quedaran en evidencia, las semejanzas y diferencias entre los clientes.
+
+
+
+### B.3.1) Miembros
+
+
+Vamos a crear una tabla filtrada, solo para los miembros, con el total de viajes realizados y el tiempo promedio de recorrido, agrupados por mes.
+Luego, procederemos con el gráfico pertinente.
+
+
+```{r total de viajes por mes de los miembros}
+
+recorridos_mensuales_miembros <- full_dataset_v2 %>% 
+  filter(member_casual == "member") %>% 
+  group_by(month_of_year) %>% 
+  summarise(
+    total_trips = n(),
+    average_time = mean(ride_length, na.rm = TRUE)) %>% 
+    arrange(month_of_year)
+
+```
+
+
+```{r gráfico del total de viajes por mes de los miembros}
+
+ggplot(data = recorridos_mensuales_miembros, aes(x= month_of_year, y= total_trips, fill = total_trips )) +
+  geom_col(fill = "#1F77B4" , position = "dodge") +
+  geom_text(aes(label = total_trips), vjust = -0.5, position = position_dodge(width = 1) , size.unit = "cm", size = 0.3) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(title = "Total de viajes por mes: miembros", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x= "Mes", y= "Cantidad Total", fill = "Viajes") +
+  theme_classic()
+
+```
+
+
+
+```{r}
+
+ggplot(data = recorridos_mensuales_miembros, aes(x= month_of_year, y= total_trips, fill = total_trips )) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = total_trips), vjust = -0.5, position = position_dodge(width = 1), size.unit = "cm", size = 0.3) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_gradient(low = "#08306B", high = "#6BAED6") + # Invertir la gama de colores
+  labs(title = "Total de viajes por mes: miembros", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x = "Mes", y = "Cantidad Total", fill = "Cantidad") +
+  theme_classic()
+
+```
+
+
+
+Con las gráficas anteriores podemos notar que en el segmento de clientes miembros, la demanda no es constante, sino estacional.
+
+Más precisamente, podemos decir que:
+
+  * La mayor cantidad de viajes registrados es de 449,019, en el mes de agosto; y la menor es de 142,499, en el mes de febrero.
+  
+  * A partir del mes de enero, y hasta el mes de agosto, se registra un aumento gradual en cuanto a cantidad de viajes registrados (variación porcentual de 209.38%).
+  
+  * Desde el mes de agosto, hasta el mes de diciembre, se registra una disminución gradual (variación porcentual de -62.47%).
+  
+  * Los tres meses con mayor cantidad de viajes son: junio, julio y agosto (orden ascendente).
+  
+  * Los tres meses con menor cantidad de viajes son: diciembre, enero y febrero (orden descendente).
+
+
+### B.3.2) Ocasionales
+
+
+Vamos a crear una segunda tabla filtrada, esta vez solo para los ocasionales, con el total de viajes realizados y el tiempo promedio de recorrido, agrupados por mes.
+Luego, procederemos con el gráfico pertinente.
+
+
+```{r total de viajes por mes de los ocasionales}
+
+recorridos_mensuales_ocasionales <- full_dataset_v2 %>% 
+  filter(member_casual == "casual") %>% 
+  group_by(month_of_year) %>% 
+  summarise(
+    total_trips = n(),
+    average_time = mean(ride_length, na.rm = TRUE)) %>% 
+    arrange(month_of_year)
+
+```
+
+
+```{r gráfico del total de viajes por mes de los ocasionales}
+
+ggplot(data = recorridos_mensuales_ocasionales, aes(x= month_of_year, y= total_trips, fill = total_trips )) +
+  geom_col(fill = "#FF7F0E" , position = "dodge") +
+  geom_text(aes(label = total_trips), vjust = -0.5, position = position_dodge(width = 1) , size.unit = "cm", size = 0.3) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(title = "Total de viajes por mes: ocasionales", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x= "Mes", y= "Cantidad Total", fill = "Viajes") +
+  theme_classic()
+
+```
+
+
+```{r}
+
+ggplot(data = recorridos_mensuales_ocasionales, aes(x= month_of_year, y= total_trips, fill = total_trips )) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = total_trips), vjust = -0.5, position = position_dodge(width = 1), size.unit = "cm", size = 0.3) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_gradient(low = "#8B4500", high = "#FFB84D") + # Invertir la gama de colores
+  labs(title = "Total de viajes por mes: ocasionales", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x = "Mes", y = "Cantidad Total", fill = "Cantidad") +
+  theme_classic()
+
+```
+
+
+
+Al igual que en el caso de los  ciclistas miembros, en el segmento de los ciclistas ocasionales también notamos que la demanda es estacional; siendo aún más pronunciada la diferencia entre los meses con mayor demanda y los meses con menor demanda.
+
+Con mayor precisión, podemos decir que:
+
+ * La mayor cantidad de viajes registrados es de 320,628, en el mes de julio; y la menor es de 38,650, en el mes de enero.
+  
+  * A partir del mes de enero, y hasta el mes de julio, se registra un aumento gradual en cuanto a cantidad de viajes registrados (variación porcentual de 729.56%).
+  
+  * Desde el mes de julio, hasta el mes de diciembre, se registra una dismiución gradual (variación porcentual de -84.30%).
+  
+  * Los tres meses con mayor cantidad de viajes son: junio, julio y agosto (máxima en julio).
+  
+  * Los tres meses con menor cantidad de viajes son: diciembre, enero y febrero (mínima en enero).
+  
+
+
+
+### B.4) Total de viajes semanales
+
+
+### B.4.1) Miembros
+
+Siguiendo el método utilizado en el apartado anterior, vamos a crear una tabla filtrada, solo para los miembros, con el total de viajes realizados y el tiempo promedio de recorrido, agrupados por día de la semana.
+Luego, procederemos con el gráfico pertinente.
+
+
+```{r total de viajes por día de la semana de los miembros}
+
+recorridos_semanales_miembros <- full_dataset_v2 %>% 
+  filter(member_casual == "member") %>% 
+  group_by(day_of_week) %>% 
+  summarise(
+    total_trips = n(),
+    average_time = mean(ride_length, na.rm = TRUE)) %>% 
+    arrange(day_of_week)
+
+```
+
+
+```{r gráfico del total de viajes por día de la semana para los miembros}
+
+ggplot(data = recorridos_semanales_miembros , aes(x=day_of_week, y= total_trips, fill = total_trips)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = total_trips), vjust = -0.5, position = position_dodge(width = 1) , size.unit = "cm", size = 0.30) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_gradient(low = "#08306B", high = "#6BAED6") + # Invertir la gama de colores
+  labs(title = "Total de viajes por cada día de semana: miembros", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023 ",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x= "Días", y= "Cantidad Total", fill= "Cantidad") +
+  theme_classic()
+
+```
+
+
+
+Según la visualización que antecede, podemos notar que hay tres días en los cuales los ciclistas con membresía hacen un mayor uso de las bicicletas como medio de transporte. Estos son los días martes, miércoles y jueves (en orden ascendente); con una diferencia de solo el 2% entre el menor valor registrado (martes) y el mayor (jueves).
+
+A partir del día jueves, hasta el domingo tenemos una disminución progresiva y gradual de los viajes registrados, siendo el domingo el día menos solicitado. La variación porcentual entre jueves y domingo es de -30.65%.
+
+
+
+
+### B.4.2) Ocasionales
+
+
+Vamos a crear la segunda tabla filtrada de este apartado, esta vez solo para los ocasionales, con el total de viajes realizados y el tiempo promedio de recorrido, agrupados por día de la semana.
+Luego, procederemos con el gráfico pertinente.
+
+
+```{r total de viajes por día de la semana de los ocasionales}
+
+recorridos_semanales_ocasionales <- full_dataset_v2 %>% 
+  filter(member_casual == "casual") %>% 
+  group_by(day_of_week) %>% 
+  summarise(
+    total_trips = n(),
+    average_time = mean(ride_length, na.rm = TRUE)) %>% 
+    arrange(day_of_week)
+
+```
+
+
+
+```{r gráfico del total de viajes por día de la semana para los ocasionales}
+
+ggplot(data = recorridos_semanales_ocasionales , aes(x=day_of_week, y= total_trips, fill = total_trips)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = total_trips), vjust = -0.5, position = position_dodge(width = 1) , size.unit = "cm", size = 0.30) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_gradient(low = "#8B4500", high = "#FFB84D") + # Invertir la gama de colores
+  labs(title = "Total de viajes por cada día de semana: ocasionales", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023 ",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x= "Días", y= "Cantidad Total", fill= "Cantidad") +
+  theme_classic()
+
+```
+
+
+Con respecto a los ocasionales, el día más popular es el sábado, y el día menos popular es el lunes.
+
+Hay una clara tendencia ascente y gradual entre el lunes y el sábado, con una variación porcentual de 74.61% 
+
+El día domingo, si bien más demandado que los días de semana, no es tan popular como el día sábado y, aunque también lo contamos como fin de semana, entre ambos se registra una variación porcentual de -18.33%.
+
+
+
+
+### B.5) Comparativa del total de viajes por hora del día
+
+
+Como lo que se puede en lo más, se puede en lo menos, vamos a profundizar el nivel de análisis. Permítasenos ahora, adentrarnos en el día y comprobar cuáles son las horas en las cuales hay mayor demanda por iniciar viajes. Esperamos que este punto sea revelador para la toma de decisiones, en lo que a disponibilidad de la flota de bicicletas se refiere. Y, también, nos proporcione algunas ideas del motivo por el cual los clientes recurren a este medio de movilidad.
+
+
+```{r total de viajes por hora del día}
+
+recorridos_por_hora <- full_dataset_v2 %>% 
+  group_by(member_casual, hour) %>% 
+  summarise(total_trips = n())
+
+```
+
+
+```{r convertir la columna hour en un factor ordenado}
+
+recorridos_por_hora <- recorridos_por_hora %>% 
+  mutate(hour_of_day = sprintf("%02d", hour))
+
+```
+
+
+
+
+```{r gráfico comparativo del total de viajes por hora}
+
+ggplot(data = recorridos_por_hora, aes(x = hour_of_day, y = total_trips, color = member_casual)) +
+  geom_point(size = 2) +
+  geom_line(aes(group = member_casual), size = 0.5) +
+  labs(title = "Total de viajes por hora: gráfico comparativo", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023 ",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x= "Hora", y= "Cantidad Total", fill= "Segmento") +
+  scale_y_continuous(labels = scales::comma) +
+  scale_color_manual(values = c("member" = "#1F77B4", "casual" = "#FF7F0E")) + # Opcional: colores específicos para cada grupo
+  theme_minimal()
+
+
+```
+
+
+
+```{r}
+
+ggplot(data = recorridos_por_hora, aes(x = hour_of_day, y = total_trips, color = member_casual)) +
+  geom_point(size = 2) +
+  geom_line(aes(group = member_casual), size = 0.5) +
+  labs(title = "Total de viajes por hora: gráfico comparativo", subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023 ",
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x= "Hora", y= "Cantidad Total", fill= "Segmento") +
+  scale_y_continuous(labels = scales::comma) +
+  scale_color_manual(values = c("member" = "#1F77B4", "casual" = "#FF7F0E")) + # Opcional: colores específicos para cada grupo
+  theme_bw()
+
+```
+
+
+
+Tanto los ciclistas miembros (8,478) como los ocasionales (5,739) registran el punto más bajo a las 04 hs.
+
+A partir de las 04 hs, los ciclistas ocasionales registran un aumento progresivo, hasta alcanzar el pico de registros a las 17 hs (193,193). Luego del pico, comienza una tendencia a la baja hasta finalizar el día, y continúa hasta el punto más bajo mencionado.
+
+En el caso de los miembros, a partir de las 04 hs, se presenta una escalada pronunciada, hasta alcanzar el punto álgido de la mañana a las 08 hs (238,141), luego de lo cual se produce un descenso y estancamiento hasta las 14 hs. A partir de ese horario, se produce una nueva escalada pronunciada en 3 horas, hasta alcanzar el máximo diario a las 17 hs (377,607), con un posterior descenso en caída libre, hasta finalizar el día y continúa hasta el punto mas bajo mencionado.
+
+
+
+### B.6) Comparativa de preferencias: tipo de rodado elegido
+
+
+En este punto, nos dedicaremos a analizar qué tipo de rodado prefieren los usuarios de ambos grupos, tanto los miembros como los ocasionales, entre bicicletas clásicas, eléctricas o ancladas.
+
+
+```{r}
+
+tipo_de_bicicleta <- full_dataset_v2 %>% 
+  group_by(member_casual, rideable_type) %>% 
+  summarise(total_trips = n())
+
+```
+
+
+```{r}
+
+# Define los colores personalizados
+colores <- c("member" = "#1F77B4", "casual" = "#FF7F0E")
+
+# Crea el gráfico de barras con colores y porcentajes
+ggplot(tipo_de_bicicleta, aes(x = rideable_type, y = total_trips, fill = member_casual)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(~member_casual) +
+  labs(title = "Tipo de rodado elegido: gráfico comparativo",
+       subtitle = "Período comprendido: desde enero 2023 hasta diciembre 2023", 
+       caption = "Fuente de datos: https://divvy-tripdata.s3.amazonaws.com/index.html",
+       x = "Tipo de bicicleta", y = "Cantidad Total", fill = "Segmento") +
+  theme_classic() +
+  scale_fill_manual(values = colores) +  # Aplica los colores personalizados
+  geom_text(aes(label = scales::percent(total_trips/sum(total_trips)), group = member_casual),
+            position = position_dodge(width = 1.5), vjust = 2.5, color = "#FFFAFA")  # Agrega los porcentajes
+
+
+```
+
+
+En el gráfico podemos observar que, del total, considerado globalmente: 
+
+  * los miembros que eligen bicicletas eléctricas representan el ***31.92%***;
+  
+  * los miembros que eligen bicicletas clásicas representan el ***32.17%***;
+  
+  * no tenemos datos sobre miembros que elijan la opción anclada; 
+  
+  * los ocasionales que eligen bicicletas eléctricas representan ***19.14%***; 
+  
+  * los ocasionales que eligen bicicletas clásicas representan el ***15.43%*** y; 
+  
+  * los ocasionales que eligen la la opción de bicicletas ancladas representan el ***0.94%***.
+
+
+Si consideramos los porcentajes anteriores, pero discriminando por tipo de cliente, los porcentajes serían los siguientes:
+
+  * los miembros utilizan en un ***50.2%*** bicicletas clásicas y en un ***49.8%*** bicicletas eléctricas; no habiendo datos registrados para bicicletas ancladas en este segmento;
+  
+  * los ciclistas ocasionales registran una leve preferencia por la opción eléctrica, ya que ***53%*** elige esta opción, mientras que un ***43%*** opta por los rodados clásicos y solo el ***4%*** se inclina por la opción anclada.
+
+
+
+
+### C) Interpretación de resultados
+
+
+
+Se pueden observar diferencias y también semejanzas en la utilización del alquiler de bicicletas compartidas por parte de los usuarios.
+
+Los ciclistas con membresía anual realizaron más viajes (64%) en comparación con los ciclistas ocasionales (36%), en este año calendario analizado.
+
+El 99% de los miembros y el 91% de los ocasionales registraron viajes iguales o menores que 45 minutos. No habiendo grandes diferencias en este apartado o, a contrario sensu, mostrando un patrón de comportamiento similar, lo cual abona la teoría de que es posible persuadir a los clientes ocasionales de optar por una membresía anual; dado que no deberían cambiar su forma de uso, en cuanto a tiempo de viaje se refiere.
+
+Hilando un poco más fino, los ciclistas con membresía registran un tiempo promedio de viaje de 11.96 minutos y los ciclistas ocasionales de 19.52 minutos, siendo tal vez este un indicador de que los miembros utilizan el transporte rentado por motivos laborales, académicos o similares; en cambio, los ocasionales harían un uso más distentido o actividades de ocio.
+
+Lo anterior parece reforzarse si traemos a colación que los días de semana son más demandados por los ciclistas con membresía que los fines de semana; siendo, además, el domingo el día menos demandado. En cambio, en el segmento ocasional los días más demandados son los sábados, seguidos por los domingos y con una sensible baja entre semana.
+
+Asimismo, los horarios en los cuales se registran las mayores cantidades de inicios de viaje, sugieren que los motivos por los cuales ambos segmentos de clientes utilizan este servicio son diferentes:
+
+  * En el caso de los miembros, hay dos picos de tendencia bastate pronunciados, y se registran a las 08 y a las 17 hs; esto refuerza las sospechas acerca de los motivos acádemicos y laborales, siendo estos los horarios de entrada y salida de trabajos e instituciones educativas e introduciendo, además, la variable del tiempo (clima) como factor a considerar, ya que el máximo es a las 17 hs, tal vez, por razones de temperatura y/o seguridad.
+    
+  * Los ciclistas ocasionales registran un alza gradual y progresiva considerable a partir de las 08 hs, alcanzando el máximo de viajes a las 17 hs, por lo que en este punto podríamos estar viendo personas que no tienen una necesidad de cumplir horarios fijos, sino que parecen estar más bien distendidas y acompañan la evolución del día (sin descartar totalmente un uso por motivos similares a los de los miembros). Consideramos también aquí el factor tiempo (clima) y seguridad.
+
+Junio, julio y agosto son los meses en los cuales se registran la mayor cantidad de viajes para ambos segmentos (pico en julio para los ocasionales y en agosto para los miembros); y también coinciden en los meses con menor cantidad de viajes registrados, que son diciembre, enero y febrero. Es decir, que a medida que las temperaturas se vuelven más calidas, aumenta proporcionalmente el uso de bicicletas compartidas y viceversa. 
+  
+Sin embargo, para el segmento ocasional también debemos tener en  cuenta que el cambio registrado es más dramático al inicio de la primarvera y al final del verano, lo que parece evidenciar que si bien las temperaturas en sí mismas influyen el uso del transporte ofrecido, la temporada de vacaciones y el turismo también.
+
+Por lo mencionado en los párrafos precedentes, no debiera descartarse una especie de membresía mensual o trimestral.
+
+Por último, con respecto al tipo de rodado elegido, un 50% de los miembros utiliza la bicicleta clásica y el otro 50% se inclina por la opción eléctrica; no habiendo datos respecto de la bicicleta anclada para estos clientes. Los ciclistas ocasionales, en cambio, tuvieron una leve preferencia por la opción eléctrica, con un 53% de los viajes registrados para esta, un 43% optó por la bicicleta clásica y solo un 4% se inclinó por la bicicleta anclada.
+
+
+
+
+------------------------------------------------------------------------------------
+
+
+
+## Fase 5: Compartir / Visualización 
+
+
+Ningún análisis estaría completo, y mucho menos cumpliría con su objetivo, si no se presentan y comunican los hallazgos, de modo que resulten comprensibles y permitan a los interesados tomar decisiones informadas. 
+
+Por lo tanto, con el fin de documentar los resultados del análisis de manera clara y estructurada, facilitar su comprensión y hacer que los patrones y las tendencias sean más evidentes y comprensibles, vamos a condensar toda esta información en un cuadro de mando o dashboard.
+
+
+```{r}
+
+include_graphics("Cyclistic/visualizaciones/11_dashboard_members_vs_casuals.png")
+
+```
+
+
+
+------------------------------------------------------------------------------------
+
+
+
+## Fase 6: Actuar / Conclusiones y Recomendaciones
+
+
+
+Para concluir este análisis, presentaremos conclusiones y recomendaciones basadas en los hallazgos previamente mencionados. Estas orientarán las estrategias de marketing que se implementarán a continuación y permitirán a los interesados y tomadores de decisiones llevar a cabo su labor de manera informada.
+
+
+
+### 6.1) Recomendaciones
+
+
+El propósito de este proyecto es: "***diseñar estrategias de marketing orientadas a convertir a los ciclistas ocasionales en miembros anuales***". Para la consecución de este objetivo, se establecieron ciertas cuestiones por resolver previamente, de las cuales nos fue asignada la primera de ellas, a saber: ***¿cómo se diferencian los miembros anuales de los ciclistas ocasionales?***.
+
+Teniendo en consideración el problema por resolver y los hallazgos hechos, podemos presentar las siguientes recomendaciones, para persuadir a los ciclistas ocasionales de optar por una membresía:
+
+  * Ofrecer acceso preferencial a los miembros sobre los ocasionales, durante las horas pico de demanda; lo cual alentaría a optar por una membresía por sobre  continuar siendo un ciclista ocasional.
+  
+  * Implementar planes de membresía mensuales o trimestrales, teniendo en consideración los períodos más concurridos de la ciudad en el año, en los cuales  ha quedado demostrado que también se ha registrado la mayor cantidad de viajes.
+  
+  * Siguiendo el punto anterior, y considerando la amplia red de estaciones de Cyclistic, sería interesante asociarse con negocios locales dedicados a ofrecer servicios de viajes y turismo, alojamiento, tours, actividades al aire libre y similares, y ofrecer descuentos a sus clientes y viceversa.
+  
+  * Indagar más acerca del uso que se hace de los rodados, específicamente si se utilizan para ejercitar, y ofrecer opciones indoor estáticas, para elevar la demanda de uso durante los meses fríos.
+  
+  * También sería auspicioso hacer una campaña de concientización acerca de los beneficios para la salud, el medio ambiente y la decomprensión de tráfico que ocasiona el uso de este tipo de transporte de manera habitual.
+  
+  * Sumado a lo anterior, ofrecer beneficios para los usuarios que utilizan las bicicletas durante la semana podría elevar el uso de mismas en los días menos demandados, que para los ocasionales son los días de semana; de este modo, generar un uso más constante durante todos los días de la semana e, indirectamente, ocasionar la necesidad de contratar una membresía.
+  
+  
+  
+  
+------------------------------------------------------------------------------------
+
+
+
+### Fuentes Consultadas: 
+
+#### 1) Certificado profesional de Análisis de Datos de Google
+(https://www.coursera.org/professional-certificates/analisis-de-datos-de-google)
+
+#### 2) Divvy and Data Visualization Case Study
+(https://artscience.ai/divvy-dataviz-case-study/)
+
+#### 3) Exploratory Data Analysis: Cyclistic Bike-Share Analysis Case Study
+(https://medium.com/codex/exploratory-data-analysis-cyclistic-bike-share-analysis-case-study-1b1a00475a4f)
+
+#### 4) Visualización de datos: los mejores gráficos para representar comparaciones
+(https://datos.gob.es/es/blog/visualizacion-de-datos-los-mejores-graficos-para-representar-comparaciones)
+
+
+
+
+
+
+
+
+
+
+
+
