@@ -138,3 +138,8 @@ Para una presentación clara y comprensible de los datos, se ha creado un dashbo
 
 #### 4) Visualización de datos: los mejores gráficos para representar comparaciones
 (https://datos.gob.es/es/blog/visualizacion-de-datos-los-mejores-graficos-para-representar-comparaciones)
+
+## Autor
+
+**Darío Exequiel Castillo**
+[LinkedIn](www.linkedin.com/in/darío-castillo-b1463998)
