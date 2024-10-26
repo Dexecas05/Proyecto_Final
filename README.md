@@ -124,3 +124,17 @@ Para una presentación clara y comprensible de los datos, se ha creado un dashbo
 5. **Campañas de Concientización:** Promover los beneficios para la salud y el medio ambiente del uso de bicicletas.
 6. **Beneficios Semanales:** Ofrecer beneficios para los usuarios que utilizan las bicicletas durante la semana.
 
+
+## Fuentes Consultadas: 
+
+#### 1) Certificado profesional de Análisis de Datos de Google
+(https://www.coursera.org/professional-certificates/analisis-de-datos-de-google)
+
+#### 2) Divvy and Data Visualization Case Study
+(https://artscience.ai/divvy-dataviz-case-study/)
+
+#### 3) Exploratory Data Analysis: Cyclistic Bike-Share Analysis Case Study
+(https://medium.com/codex/exploratory-data-analysis-cyclistic-bike-share-analysis-case-study-1b1a00475a4f)
+
+#### 4) Visualización de datos: los mejores gráficos para representar comparaciones
+(https://datos.gob.es/es/blog/visualizacion-de-datos-los-mejores-graficos-para-representar-comparaciones)
