@@ -143,4 +143,5 @@ Para una presentación clara y comprensible de los datos, se ha creado un dashbo
 
 **Darío Exequiel Castillo**
 
-[LinkedIn](www.linkedin.com/in/darío-castillo-b1463998)
+LinkedIn
+(www.linkedin.com/in/darío-castillo-b1463998)
