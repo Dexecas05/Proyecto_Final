@@ -117,10 +117,10 @@ Para una presentación clara y comprensible de los datos, se ha creado un dashbo
 
 ### Recomendaciones
 
-1- **Acceso Preferencial:** Ofrecer acceso preferencial a los miembros durante las horas pico.
-2- **Planes de Membresía Flexibles:** Implementar planes de membresía mensuales o trimestrales.
-3- **Asociaciones Locales:** Asociarse con negocios locales para ofrecer descuentos mutuos.
-4- **Opciones Indoor:** Ofrecer opciones de ejercicio indoor para elevar la demanda en meses fríos.
-5- **Campañas de Concientización:** Promover los beneficios para la salud y el medio ambiente del uso de bicicletas.
-6- **Beneficios Semanales:** Ofrecer beneficios para los usuarios que utilizan las bicicletas durante la semana.
+1. **Acceso Preferencial:** Ofrecer acceso preferencial a los miembros durante las horas pico.
+2. **Planes de Membresía Flexibles:** Implementar planes de membresía mensuales o trimestrales.
+3. **Asociaciones Locales:** Asociarse con negocios locales para ofrecer descuentos mutuos.
+4. **Opciones Indoor:** Ofrecer opciones de ejercicio indoor para elevar la demanda en meses fríos.
+5. **Campañas de Concientización:** Promover los beneficios para la salud y el medio ambiente del uso de bicicletas.
+6. **Beneficios Semanales:** Ofrecer beneficios para los usuarios que utilizan las bicicletas durante la semana.
 
